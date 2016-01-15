@@ -1,0 +1,24 @@
+{
+  "name": "Timepicker",
+  "main": "Timepicker.js",
+  "authors": [
+    "Emil Moe <emil@moegroup.dk>"
+  ],
+  "description": "Timepicker dropdown",
+  "moduleType": [],
+  "keywords": [
+    "bootstrap",
+    "timepicker",
+    "javascript",
+    "css"
+  ],
+  "license": "MIT",
+  "homepage": "http://emilmoe.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
