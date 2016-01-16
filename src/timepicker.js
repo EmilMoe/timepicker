@@ -9,6 +9,7 @@ var timepicker = {
         minute: 0
     },
     active: false,
+    source: null,
     load: function(options)
     {
         var self        = this;
@@ -18,18 +19,20 @@ var timepicker = {
         {
             timepicker.onclick = function()
             {
+                self.source = this;
+
                 if (self.active == true)
                     return;
 
                 self.showHour(this, 1, 24, function(list, selected)
                 {
                     self.time.hour = selected;
-                    timepicker.value = self.time.hour +':00';
+                    self.source.value = self.time.hour +':00';
 
                     self.showMinute(list, self.option('interval'), 60, self.time.hour, function(selected)
                     {
                         self.time.minute = selected;
-                        timepicker.value = self.time.hour +':'+ self.time.minute;
+                        self.source.value = self.time.hour +':'+ self.time.minute;
                     });
                 });
             };
