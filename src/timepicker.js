@@ -63,6 +63,8 @@ var timepicker = {
         div         = document.createElement('div');
         ul          = document.createElement('ul');
 
+        ul.setAttribute('data-value', 'null');
+
         div.setAttribute('class', 'timepicker');
         div.setAttribute('data-name', timepicker.getAttribute('name'));
 
