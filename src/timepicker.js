@@ -81,8 +81,9 @@ var timepicker = {
     {
         document.removeEventListener('mouseup', this.onClickEvent);
         document.removeEventListener('keydown', this.onKeyEvents);
-        document.querySelector('.timepicker').remove();
-
+        timepicker = document.querySelector('.timepicker');
+        timepicker.parentNode.removeChild(timepicker);
+        
         this.active = false;
     },
     clear: function(list)
@@ -90,7 +91,7 @@ var timepicker = {
         all = list.querySelectorAll('li');
 
         for (var i = 0; i < all.length; i++)
-            all[i].remove();
+            all[i].parentNode.removeChild(all[i]);
     },
     showHour: function(timepicker, interval, max, callback)
     {
