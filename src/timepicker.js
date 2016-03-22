@@ -1,12 +1,15 @@
 var timepicker = {
     defaults: {
         interval: 15,
-        start: 0
+        defaultHour: null,
+        defaultMinute: null,
+        start: 0,
+        end: 24
     },
     options: null,
     time: {
-        hour: 0,
-        minute: 0
+        hour: null,
+        minute: null
     },
     active: false,
     source: null,
@@ -17,6 +20,23 @@ var timepicker = {
 
         self.each(function(timepicker)
         {
+            if (self.option('defaultHour') != null)
+            {
+                timepicker.value = self.pad(self.option('defaultHour'));
+                self.time.hour = self.option('defaultHour');
+
+                if (self.option('defaultMinute') != null)
+                {
+                    timepicker.value += ':'+ self.pad(self.option('defaultMinute'));
+                    self.time.minute = self.option('defaultMinute');
+                }
+                else
+                {
+                    timepicker.value += ':00';
+                    self.time.minute = 0;
+                }
+            }
+
             timepicker.onclick = function()
             {
                 self.source = this;
@@ -24,7 +44,7 @@ var timepicker = {
                 if (self.active == true)
                     return;
 
-                self.showHour(this, 1, 24, function(list, selected)
+                self.showHour(this, 1, self.option('start'), self.option('end'), function(list, selected)
                 {
                     self.time.hour = selected;
                     self.source.value = self.time.hour +':00';
@@ -93,11 +113,12 @@ var timepicker = {
         for (var i = 0; i < all.length; i++)
             all[i].parentNode.removeChild(all[i]);
     },
-    showHour: function(timepicker, interval, max, callback)
+    showHour: function(timepicker, interval, min, max, callback)
     {
-        ul = this.make(timepicker);
+        var li = null;
+        ul     = this.make(timepicker);
 
-        for (var i = this.option('start'); i < max; i = i + interval)
+        for (var i = min; i < max; i = i + interval)
         {
             li = document.createElement("li");
             li.setAttribute('href', '#');
@@ -124,6 +145,11 @@ var timepicker = {
                 callback(ul, this.getAttribute('data-value'));
             };
         }
+
+        if (this.time.hour == null)
+            ul.scrollTop = li.clientHeight * this.option('default');
+        else
+            ul.scrollTop = this.time.hour * li.clientHeight;
     },
     showMinute: function(list, interval, max, hour, callback)
     {
@@ -228,6 +254,7 @@ var timepicker = {
 document.addEventListener("DOMContentLoaded", function(event)
 {
     timepicker.load({
-        interval: 15
+        interval: 15,
+        defaultHour: 8
     });
 });
