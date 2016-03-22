@@ -115,7 +115,8 @@ var timepicker = {
     },
     showHour: function(timepicker, interval, min, max, callback)
     {
-        ul     = this.make(timepicker);
+        var height = null;
+        ul         = this.make(timepicker);
 
         for (var i = min; i < max; i = i + interval)
         {
@@ -124,6 +125,9 @@ var timepicker = {
             li.setAttribute('data-value', this.pad(i));
             li.appendChild(document.createTextNode(this.pad(i) +':00'));
             ul.appendChild(li);
+
+            if (height == null)
+                height = li.clientHeight;
 
             li.onmouseover = function()
             {
@@ -144,6 +148,11 @@ var timepicker = {
                 callback(ul, this.getAttribute('data-value'));
             };
         }
+
+        if (this.time.hour == null)
+            ul.scrollTop = height * this.option('default');
+        else
+            ul.scrollTop = this.time.hour * height;
     },
     showMinute: function(list, interval, max, hour, callback)
     {
@@ -244,11 +253,3 @@ var timepicker = {
         }
     }
 };
-
-document.addEventListener("DOMContentLoaded", function(event)
-{
-    timepicker.load({
-        interval: 15,
-        defaultHour: 8
-    });
-});
