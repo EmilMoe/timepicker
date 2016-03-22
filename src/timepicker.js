@@ -115,7 +115,7 @@ var timepicker = {
     },
     showHour: function(timepicker, interval, min, max, callback)
     {
-        var li = null;
+        var height = null;
         ul     = this.make(timepicker);
 
         for (var i = min; i < max; i = i + interval)
@@ -125,6 +125,9 @@ var timepicker = {
             li.setAttribute('data-value', this.pad(i));
             li.appendChild(document.createTextNode(this.pad(i) +':00'));
             ul.appendChild(li);
+
+            if (height == null)
+                height = li.clientHeight;
 
             li.onmouseover = function()
             {
@@ -147,9 +150,9 @@ var timepicker = {
         }
 
         if (this.time.hour == null)
-            ul.scrollTop = li.clientHeight * this.option('default');
+            ul.scrollTop = height * this.option('default');
         else
-            ul.scrollTop = this.time.hour * li.clientHeight;
+            ul.scrollTop = this.time.hour * height;
     },
     showMinute: function(list, interval, max, hour, callback)
     {
